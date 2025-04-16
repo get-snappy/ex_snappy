@@ -1,10 +1,12 @@
 defmodule ExSnappy do
   def snap(name, html, options \\ %{}) do
     # send HTML and options to go-snappy
+    wrapped = maybe_wrap_html(html)
+
     html =
       case Map.get(options, :strip_script_tags) do
-        true -> strip_script_tags(html)
-        _ -> html
+        true -> strip_script_tags(wrapped)
+        _ -> wrapped
       end
 
     post(name, html, options)
@@ -53,5 +55,28 @@ defmodule ExSnappy do
 
     # Convert the modified HTML back to a string
     Floki.raw_html(cleansed)
+  end
+
+  def maybe_wrap_html(html) do
+    # check if html has a head tag
+    Floki.parse_document!(html)
+    |> Floki.find("head")
+    |> case do
+      [] ->
+        # if not, wrap it in a head and body tag
+        wrapper_fn = Application.get_env(:ex_snappy, :wrapper_fn)
+
+        if is_function(wrapper_fn) do
+          # if wrapper_fn is a function, call it with the html
+          wrapper_fn.(html)
+        else
+          # if not, return the html as is
+          html
+        end
+
+      _ ->
+        # if it does, return the html as is
+        html
+    end
   end
 end

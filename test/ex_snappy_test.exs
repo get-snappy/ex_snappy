@@ -20,6 +20,41 @@ defmodule ExSnappyTest do
            """) == "<html></html>"
   end
 
+  test "Wraps with html if missing <head>" do
+    Application.put_env(:ex_snappy, :wrapper_fn, fn inner_content ->
+      """
+      <!DOCTYPE html>
+      <html lang="en" class="[scrollbar-gutter:stable]">
+      <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="csrf-token" content={get_csrf_token()} />
+      <link phx-track-static rel="stylesheet" href="/assets/app.css" />
+      </head>
+      <body class="bg-white antialiased dark:bg-gray-900 dark:text-gray-100">
+      #{inner_content}
+      </body>
+      </html>
+      """
+    end)
+
+    assert ExSnappy.maybe_wrap_html("<div></div>") ==
+             """
+             <!DOCTYPE html>
+             <html lang="en" class="[scrollbar-gutter:stable]">
+             <head>
+             <meta charset="utf-8" />
+             <meta name="viewport" content="width=device-width, initial-scale=1" />
+             <meta name="csrf-token" content={get_csrf_token()} />
+             <link phx-track-static rel="stylesheet" href="/assets/app.css" />
+             </head>
+             <body class="bg-white antialiased dark:bg-gray-900 dark:text-gray-100">
+             <div></div>
+             </body>
+             </html>
+             """
+  end
+
   test "Passing along options" do
     Req.Test.stub(ExSnappy, fn conn ->
       Req.Test.text(conn, "OK")
