@@ -22,8 +22,9 @@ defmodule ExSnappy.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:req, "~> 0.5"},
+      {:elixir_uuid, "~> 1.2.1"},
       {:jason, "~> 1.4"},
+      {:req, "~> 0.5"},
       {:plug, "~> 1.17", optional: true}
     ]
   end

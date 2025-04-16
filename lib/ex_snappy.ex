@@ -7,6 +7,9 @@ defmodule ExSnappy do
   def post(name, html, options) do
     # send HTML and options to go-snappy
     endpoint = Application.get_env(:ex_snappy, :endpoint)
+
+    url = Path.join([endpoint, "snappy-api", "snapshot", UUID.uuid4()])
+
     req_options = Application.get_env(:ex_snappy, :req_options, [])
 
     body = %{
@@ -19,7 +22,7 @@ defmodule ExSnappy do
       [json: body]
       |> Keyword.merge(req_options)
 
-    request = Req.post(endpoint, options)
+    request = Req.post(url, options)
 
     case request do
       {:ok, %Req.Response{status: 200, body: "OK"}} ->
