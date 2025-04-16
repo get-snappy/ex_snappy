@@ -24,7 +24,7 @@ defmodule ExSnappy.MixProject do
     [
       {:req, "~> 0.5"},
       {:jason, "~> 1.4"},
-      {:plug, "~> 1.17"}
+      {:plug, "~> 1.17", optional: true}
     ]
   end
 end
