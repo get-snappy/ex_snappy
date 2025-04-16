@@ -28,7 +28,6 @@ defmodule ExSnappyTest do
       <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="csrf-token" content={get_csrf_token()} />
       <link phx-track-static rel="stylesheet" href="/assets/app.css" />
       </head>
       <body class="bg-white antialiased dark:bg-gray-900 dark:text-gray-100">
@@ -45,7 +44,6 @@ defmodule ExSnappyTest do
              <head>
              <meta charset="utf-8" />
              <meta name="viewport" content="width=device-width, initial-scale=1" />
-             <meta name="csrf-token" content={get_csrf_token()} />
              <link phx-track-static rel="stylesheet" href="/assets/app.css" />
              </head>
              <body class="bg-white antialiased dark:bg-gray-900 dark:text-gray-100">

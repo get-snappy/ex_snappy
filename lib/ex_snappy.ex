@@ -1,5 +1,33 @@
 defmodule ExSnappy do
-  def snap(name, html, options \\ %{}) do
+  defmacro snap(html) do
+    test_name = generate_test_name(__CALLER__)
+
+    quote do
+      ExSnappy.process_snapshot(unquote(test_name), unquote(html), %{})
+    end
+  end
+
+  defmacro snap(name, html) do
+    test_name = generate_test_name(__CALLER__, name)
+
+    quote do
+      ExSnappy.process_snapshot(unquote(test_name), unquote(html), %{})
+    end
+  end
+
+  defmacro snap(name, html, options) do
+    test_name = generate_test_name(__CALLER__, name)
+
+    quote do
+      ExSnappy.process_snapshot(
+        unquote(test_name),
+        unquote(html),
+        unquote(options)
+      )
+    end
+  end
+
+  def process_snapshot(name, html, options) do
     # send HTML and options to go-snappy
     wrapped = maybe_wrap_html(html)
 
@@ -77,6 +105,29 @@ defmodule ExSnappy do
       _ ->
         # if it does, return the html as is
         html
+    end
+  end
+
+  defp generate_test_name(caller) do
+    case caller.function do
+      {test_name, _arity} ->
+        test_name
+        |> to_string()
+        |> String.trim_leading("test ")
+
+      _ ->
+        raise("TestSnapshot.snapshot/1 must be called from a test function")
+    end
+  end
+
+  defp generate_test_name(caller, name) do
+    case caller.function do
+      {test_name, _arity} ->
+        trimmed_name = test_name |> to_string() |> String.trim_leading("test ")
+        "#{trimmed_name} - #{name}"
+
+      _ ->
+        raise("TestSnapshot.snapshot/1 must be called from a test function")
     end
   end
 end
