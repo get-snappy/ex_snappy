@@ -1,12 +1,18 @@
 defmodule ExSnappy do
   def snap(name, html, options \\ %{}) do
     # send HTML and options to go-snappy
+    html =
+      case Map.get(options, :strip_script_tags) do
+        true -> strip_script_tags(html)
+        _ -> html
+      end
+
     post(name, html, options)
   end
 
   def post(name, html, options) do
     # send HTML and options to go-snappy
-    endpoint = Application.get_env(:ex_snappy, :endpoint)
+    endpoint = Application.get_env(:ex_snappy, :endpoint, "http://localhost:4050")
 
     url = Path.join([endpoint, "snappy-api", "snapshot", UUID.uuid4()])
 
@@ -34,5 +40,18 @@ defmodule ExSnappy do
       {:error, reason} ->
         {:error, reason}
     end
+  end
+
+  def strip_script_tags(html) do
+    # Remove script tags from the HTML
+    cleansed =
+      Floki.parse_document!(html)
+      |> Floki.traverse_and_update(fn
+        {"script", _, _} -> nil
+        el -> el
+      end)
+
+    # Convert the modified HTML back to a string
+    Floki.raw_html(cleansed)
   end
 end
