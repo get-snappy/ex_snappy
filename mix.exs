@@ -9,7 +9,7 @@ defmodule ExSnappy.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       name: "ExSnappy",
-      source_url: "",
+      source_url: "https://github.com/get-snappy/ex_snappy",
       docs: &docs/0
     ]
   end
