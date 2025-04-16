@@ -1,0 +1,2 @@
+defmodule ExSnappy do
+end
