@@ -10,6 +10,14 @@ defmodule ExSnappyTest do
     assert ExSnappy.snap("test-name", "<html></html>") == :ok
   end
 
+  test "Passing along options" do
+    Req.Test.stub(ExSnappy, fn conn ->
+      Req.Test.text(conn, "OK")
+    end)
+
+    assert ExSnappy.snap("test-name", "<html></html>", %{dimensions: []}) == :ok
+  end
+
   test "Go Snappy not running" do
     Req.Test.stub(ExSnappy, fn conn ->
       Req.Test.transport_error(conn, :econnrefused)

@@ -1,10 +1,10 @@
 defmodule ExSnappy do
-  def snap(name, html, options \\ []) do
+  def snap(name, html, options \\ %{}) do
     # send HTML and options to go-snappy
     post(name, html, options)
   end
 
-  def post(name, html, options \\ []) do
+  def post(name, html, options) do
     # send HTML and options to go-snappy
     endpoint = Application.get_env(:ex_snappy, :endpoint)
     req_options = Application.get_env(:ex_snappy, :req_options, [])
