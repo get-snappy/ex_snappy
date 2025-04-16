@@ -23,7 +23,9 @@ defmodule ExSnappy.MixProject do
   end
 
   defp docs do
-    []
+    [
+      extras: ["README.md"]
+    ]
   end
 
   # Run "mix help deps" to learn about dependencies.
