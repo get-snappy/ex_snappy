@@ -37,8 +37,8 @@ defmodule ExSnappy.Utils do
     end
   end
 
-  def generate_test_name(caller) do
-    case caller.function do
+  def generate_test_name(caller, nil) do
+    case caller do
       {test_name, _arity} ->
         test_name
         |> to_string()
@@ -50,7 +50,7 @@ defmodule ExSnappy.Utils do
   end
 
   def generate_test_name(caller, name) do
-    case caller.function do
+    case caller do
       {test_name, _arity} ->
         trimmed_name = test_name |> to_string() |> String.trim_leading("test ")
         "#{trimmed_name} - #{name}"

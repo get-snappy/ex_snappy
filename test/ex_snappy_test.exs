@@ -15,7 +15,7 @@ defmodule ExSnappyTest do
       Req.Test.text(conn, "OK")
     end)
 
-    assert ExSnappy.snap("test-name", "<html></html>") == :ok
+    assert ExSnappy.snap("<html></html>", %{name: "test"}) == :ok
   end
 
   test "Passing along options" do
@@ -23,7 +23,7 @@ defmodule ExSnappyTest do
       Req.Test.text(conn, "OK")
     end)
 
-    assert ExSnappy.snap("test-name", "<html></html>", %{dimensions: []}) == :ok
+    assert ExSnappy.snap("<html></html>", %{name: "test-name", dimensions: []}) == :ok
   end
 
   test "Go Snappy not running" do
@@ -31,7 +31,7 @@ defmodule ExSnappyTest do
       Req.Test.transport_error(conn, :econnrefused)
     end)
 
-    assert ExSnappy.snap("test-name", "<html></html>") ==
+    assert ExSnappy.snap("<html></html>") ==
              {:error,
               %Req.TransportError{
                 reason: :econnrefused

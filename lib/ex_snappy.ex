@@ -8,50 +8,18 @@ defmodule ExSnappy do
 
   Uses the name of the test function as the snapshot name.
   """
-  defmacro snap(html) do
+  defmacro snap(html, options \\ Macro.escape(%{})) do
     if Application.get_env(:ex_snappy, :enabled) do
-      test_name = ExSnappy.Utils.generate_test_name(__CALLER__)
+      function_name = __CALLER__.function
 
       quote do
-        ExSnappy.API.process_snapshot(unquote(test_name), unquote(html), %{})
-      end
-    end
-  end
+        test_name =
+          case Map.get(unquote(options), :name) do
+            nil -> ExSnappy.Utils.generate_test_name(unquote(function_name), nil)
+            name -> ExSnappy.Utils.generate_test_name(unquote(function_name), name)
+          end
 
-  @doc """
-  Takes a snapshot of the given HTML with the specified name 
-
-  Uses the name of the test function as the snapshot name plus a suffix. Use if you need to run
-  multiple snapshots in the same test function.
-  """
-  defmacro snap(name, html) do
-    if Application.get_env(:ex_snappy, :enabled) do
-      test_name = ExSnappy.Utils.generate_test_name(__CALLER__, name)
-
-      quote do
-        ExSnappy.API.process_snapshot(unquote(test_name), unquote(html), %{})
-      end
-    end
-  end
-
-  @doc """
-  Takes a snapshot of the given HTML with the specified name and options.
-
-  Uses the name of the test function as the snapshot name plus a suffix. Use if you need to run
-  multiple snapshots in the same test function.
-
-  Options are passed to the Go Snappy service to control the rendered screenshots.
-  """
-  defmacro snap(name, html, options) do
-    if Application.get_env(:ex_snappy, :enabled) do
-      test_name = ExSnappy.Utils.generate_test_name(__CALLER__, name)
-
-      quote do
-        ExSnappy.API.process_snapshot(
-          unquote(test_name),
-          unquote(html),
-          unquote(options)
-        )
+        ExSnappy.API.process_snapshot(test_name, unquote(html), unquote(options))
       end
     end
   end
