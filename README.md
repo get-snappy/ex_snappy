@@ -188,13 +188,13 @@ Simply provide an explicit name for all but the first call to `snap`.
 
       render_async(index_live)
 
-      snap("after patch", render(index_live))
+      snap(render(index_live), name: "after render" )
 
       assert index_live
              |> form("#project-form", project: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
-      snap("With errors", render(index_live))
+      snap( render(index_live), name: "With errors")
 
       assert index_live
              |> form("#project-form",
@@ -204,6 +204,6 @@ Simply provide an explicit name for all but the first call to `snap`.
              )
              |> render_submit()
 
-      snap("With errors fixed", render(index_live))
+      snap(render(index_live), name: "With errors fixed")
    end
 ```

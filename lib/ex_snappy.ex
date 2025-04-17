@@ -7,6 +7,10 @@ defmodule ExSnappy do
   Takes a snapshot of the given HTML and sends it to the Go Snappy service.
 
   Uses the name of the test function as the snapshot name.
+
+  You can explicitly set the name of the snapshot by passing the `:name` option.
+
+  Other options will be passed to the Go Snappy service, such as setting dimensions.
   """
   defmacro snap(html, options \\ []) do
     if Application.get_env(:ex_snappy, :enabled) do
