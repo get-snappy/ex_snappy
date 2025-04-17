@@ -8,13 +8,13 @@ defmodule ExSnappy do
 
   Uses the name of the test function as the snapshot name.
   """
-  defmacro snap(html, options \\ Macro.escape(%{})) do
+  defmacro snap(html, options \\ []) do
     if Application.get_env(:ex_snappy, :enabled) do
       function_name = __CALLER__.function
 
       quote do
         test_name =
-          case Map.get(unquote(options), :name) do
+          case Keyword.get(unquote(options), :name) do
             nil -> ExSnappy.Utils.generate_test_name(unquote(function_name), nil)
             name -> ExSnappy.Utils.generate_test_name(unquote(function_name), name)
           end

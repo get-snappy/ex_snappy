@@ -15,7 +15,7 @@ defmodule ExSnappyTest do
       Req.Test.text(conn, "OK")
     end)
 
-    assert ExSnappy.snap("<html></html>", %{name: "test"}) == :ok
+    assert ExSnappy.snap("<html></html>", name: "test") == :ok
   end
 
   test "Passing along options" do
@@ -23,7 +23,7 @@ defmodule ExSnappyTest do
       Req.Test.text(conn, "OK")
     end)
 
-    assert ExSnappy.snap("<html></html>", %{name: "test-name", dimensions: []}) == :ok
+    assert ExSnappy.snap("<html></html>", name: "test-name", dimensions: []) == :ok
   end
 
   test "Go Snappy not running" do

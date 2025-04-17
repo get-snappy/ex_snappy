@@ -5,7 +5,7 @@ defmodule ExSnappy.API do
     wrapped = ExSnappy.Utils.maybe_wrap_html(html)
 
     html =
-      case Map.get(options, :strip_script_tags) do
+      case Keyword.get(options, :strip_script_tags) do
         true -> ExSnappy.Utils.strip_script_tags(wrapped)
         _ -> wrapped
       end
@@ -20,6 +20,10 @@ defmodule ExSnappy.API do
     url = Path.join([endpoint, "snappy-api", "snapshot", UUID.uuid4()])
 
     req_options = Application.get_env(:ex_snappy, :req_options, [])
+
+    options =
+      Keyword.drop(options, [:name, :strip_script_tags])
+      |> Enum.into(%{})
 
     body = %{
       "name" => name,
