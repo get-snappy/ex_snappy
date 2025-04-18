@@ -10,6 +10,9 @@ defmodule ExSnappy do
 
   You can explicitly set the name of the snapshot by passing the `:name` option.
 
+  By default, any <script> tags in the HTML will be removed before sending to the Go Snappy service.
+  This is to ensure that the DOM will not be modified when processed for screenshots.
+
   Other options will be passed to the Go Snappy service, such as setting dimensions.
   """
   defmacro snap(html, options \\ []) do
