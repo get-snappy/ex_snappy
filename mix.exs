@@ -46,8 +46,8 @@ defmodule ExSnappy.MixProject do
   defp deps do
     [
       {:elixir_uuid, "~> 1.2.1"},
-      {:ex_doc, "0.37.3", only: :dev, runtime: false},
-      {:floki, "0.37.1"},
+      {:ex_doc, "> 0.0.0", only: :dev, runtime: false},
+      {:floki, "> 0.0.0"},
       {:jason, "~> 1.4"},
       {:req, "~> 0.5"},
       {:plug, "~> 1.17", optional: true}
