@@ -7,7 +7,7 @@ defmodule ExSnappy.MixProject do
       app: :ex_snappy,
       description:
         "Phoenix and LiveView visual regression testing tool for the GetSnappy platform ",
-      version: "0.4.4",
+      version: "0.4.5",
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
