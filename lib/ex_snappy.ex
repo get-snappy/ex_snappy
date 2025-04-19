@@ -21,6 +21,8 @@ defmodule ExSnappy do
 
   """
   defmacro snap(html, options \\ []) do
+    _ = html
+
     if Application.get_env(:ex_snappy, :enabled) do
       function_name = __CALLER__.function
 
