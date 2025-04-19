@@ -24,14 +24,14 @@ defmodule ExSnappy do
     if Application.get_env(:ex_snappy, :enabled) do
       function_name = __CALLER__.function
 
-      quote do
+      quote bind_quoted: [function_name: function_name, options: options, html: html] do
         test_name =
-          case Keyword.get(unquote(options), :name) do
-            nil -> ExSnappy.Utils.generate_test_name(unquote(function_name), nil)
-            name -> ExSnappy.Utils.generate_test_name(unquote(function_name), name)
+          case Keyword.get(options, :name) do
+            nil -> ExSnappy.Utils.generate_test_name(function_name, nil)
+            name -> ExSnappy.Utils.generate_test_name(function_name, name)
           end
 
-        ExSnappy.API.process_snapshot(test_name, unquote(html), unquote(options))
+        ExSnappy.API.process_snapshot(test_name, html, options)
       end
     end
   end
