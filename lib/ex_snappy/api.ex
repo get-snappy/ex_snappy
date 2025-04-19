@@ -37,8 +37,6 @@ defmodule ExSnappy.API do
       "playwright_options" => playwright_options
     }
 
-    dbg(body["playwright_options"])
-
     options =
       [json: body]
       |> Keyword.merge(req_options)
