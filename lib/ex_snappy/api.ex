@@ -16,20 +16,28 @@ defmodule ExSnappy.API do
   def post(name, html, options) do
     # send HTML and options to go-snappy
     endpoint = Application.get_env(:ex_snappy, :endpoint, "http://localhost:4050")
+    full_page = Application.get_env(:ex_snappy, :full_page, true)
 
     url = Path.join([endpoint, "snappy-api", "snapshot", UUID.uuid4()])
 
     req_options = Application.get_env(:ex_snappy, :req_options, [])
 
+    playwright_options =
+      Keyword.get(options, :playwright_options, %{full_page: full_page})
+      |> Enum.into(%{})
+
     options =
-      Keyword.drop(options, [:name, :strip_script_tags])
+      Keyword.drop(options, [:name, :strip_script_tags, :playwright_options])
       |> Enum.into(%{})
 
     body = %{
       "name" => name,
       "html" => html,
-      "options" => options
+      "options" => options,
+      "playwright_options" => playwright_options
     }
+
+    dbg(body["playwright_options"])
 
     options =
       [json: body]

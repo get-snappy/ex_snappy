@@ -54,6 +54,13 @@ config :ex_snappy,
   enabled: System.get_env("EX_SNAPPY_ENABLED") == "true"
 ```
 
+If you don't wish your screenshots to be full_page you can turn this off globally
+
+```elixir
+config :ex_snappy,
+  full_page: false
+```
+
 # Setup
 
 To execute the visual regression tests, you'll need to install the binary from https://get-snappy.com/app/downloads 

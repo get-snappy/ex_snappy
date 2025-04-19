@@ -14,6 +14,11 @@ defmodule ExSnappy do
   This is to ensure that the DOM will not be modified when processed for screenshots.
 
   Other options will be passed to the Go Snappy service, such as setting dimensions.
+
+  You can also pass `:playwright_options` to set options for Playwright.  Currently only `:full_page` is supported, which will default to `true`.
+
+  You can globally set whether to enable full page screenshots by setting the `:full_page` option in your config file to `false`.
+
   """
   defmacro snap(html, options \\ []) do
     if Application.get_env(:ex_snappy, :enabled) do
