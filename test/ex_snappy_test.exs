@@ -37,4 +37,14 @@ defmodule ExSnappyTest do
                 reason: :econnrefused
               }}
   end
+
+  test "Should't show and unused variable" do
+    Req.Test.stub(ExSnappy, fn conn ->
+      Req.Test.text(conn, "OK")
+    end)
+
+    html = "<html></html>"
+
+    assert ExSnappy.snap(html) == :ok
+  end
 end
