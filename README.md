@@ -67,11 +67,19 @@ To execute the visual regression tests, you'll need to install the binary from h
 
 And add some configuration data by creating a `.get-snappy.yml` file
 
+The `local_dist_dir` is use to allow the rendering service to know where your static assets are.  For most Phoenix projects, this would be `priv/static`
+
+`snappy_workers` are the number of workers per browser.  This allows faster rendering of snapshots, but can be reduced if you are resource limited.  In the example below there would be a total of 12 browser instances (4 x 3 browser).
+
+`browsers` Are the browsers you wish to render in
+
+`test_command` is the shell command you wish to run to execute your test suite.
+
 ```yml
 local_dist_dir: "priv/static"
 snappy_workers: 4
 test_command: "mix do assets.build, mix test"
-browsers: ["chrome"]
+browsers: ["chrome", "webkit", "firefox"]
 ```
 
 You'll also need to set some environment variables, an example of this is below, but you'd likely get the COMMIT and BRANCH from your CI provider.
