@@ -15,9 +15,19 @@ defmodule ExSnappy do
 
   Other options will be passed to the Go Snappy service, such as setting dimensions.
 
-  You can also pass `:playwright_options` to set options for Playwright.  Currently only `:full_page` is supported, which will default to `true`.
+  You can also pass `:playwright_options` to set options for Playwright.  
 
+
+
+  # Playwright Options
+
+  `:full_page`, which defaults to `true`.
   You can globally set whether to enable full page screenshots by setting the `:full_page` option in your config file to `false`.
+
+  `:dark_mode`, which defaults to `false`.
+
+  `:locator`, which can be a CSS selector which should target a *single* element.  This will limit 
+  the screenshot size to the bounding box of the element.  This is useful for testing specific elements and components.
 
   """
   defmacro snap(html, options \\ []) do
