@@ -50,7 +50,7 @@ defmodule ExSnappy.MixProject do
       {:floki, "> 0.0.0"},
       {:jason, "~> 1.4"},
       {:req, "~> 0.5"},
-      {:plug, "~> 1.17", optional: true}
+      {:plug, "> 0.0.0", optional: true}
     ]
   end
 end
