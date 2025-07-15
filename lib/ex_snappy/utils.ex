@@ -43,6 +43,7 @@ defmodule ExSnappy.Utils do
         test_name
         |> to_string()
         |> String.trim_leading("test ")
+        |> maybe_add_test_prefix()
 
       _ ->
         raise("TestSnapshot.snapshot/1 must be called from a test function")
@@ -53,10 +54,22 @@ defmodule ExSnappy.Utils do
     case caller do
       {test_name, _arity} ->
         trimmed_name = test_name |> to_string() |> String.trim_leading("test ")
+
         "#{trimmed_name} - #{name}"
+        |> maybe_add_test_prefix()
 
       _ ->
         raise("TestSnapshot.snapshot/1 must be called from a test function")
+    end
+  end
+
+  def maybe_add_test_prefix(name) do
+    prefix = Application.get_env(:ex_snappy, :test_prefix)
+
+    if prefix do
+      "(#{prefix}) #{name}"
+    else
+      name
     end
   end
 end

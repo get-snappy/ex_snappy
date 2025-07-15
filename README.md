@@ -61,6 +61,13 @@ config :ex_snappy,
   full_page: false
 ```
 
+If you're running tests that run in multiple environments you may want to add a prefix to differentiate tests.
+
+```elixir
+ config :ex_snappy,
+   test_prefix: System.get_env("MY_TEST_PREFIX")
+```
+
 # Setup
 
 To execute the visual regression tests, you'll need to install the binary from https://get-snappy.com/app/downloads 

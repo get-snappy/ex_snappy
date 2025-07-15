@@ -1,5 +1,11 @@
 defmodule ExSnappy.UtilsTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: false
+
+  setup do
+    on_exit(fn ->
+      Application.put_env(:ex_snappy, :test_prefix, nil)
+    end)
+  end
 
   test "Strings script tags" do
     assert ExSnappy.Utils.strip_script_tags("""
@@ -42,5 +48,18 @@ defmodule ExSnappy.UtilsTest do
              </body>
              </html>
              """
+  end
+
+  test "generates test name without explicit name" do
+    caller = {ExSnappyTest, 1}
+    assert ExSnappy.Utils.generate_test_name(caller, nil) == "Elixir.ExSnappyTest"
+  end
+
+  test "adds a prefix to the test name" do
+    Application.put_env(:ex_snappy, :test_prefix, "Ubuntu 20.04")
+    caller = {ExSnappyTest, 1}
+
+    assert ExSnappy.Utils.generate_test_name(caller, "my-snapshot") ==
+             "(Ubuntu 20.04) Elixir.ExSnappyTest - my-snapshot"
   end
 end

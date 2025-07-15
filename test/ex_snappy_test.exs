@@ -38,7 +38,7 @@ defmodule ExSnappyTest do
               }}
   end
 
-  test "Should't show and unused variable" do
+  test "Shouldn't show and unused variable" do
     Req.Test.stub(ExSnappy, fn conn ->
       Req.Test.text(conn, "OK")
     end)
