@@ -125,6 +125,21 @@ end
 
 Then to use in tests, you need send HTML.  This can be achieved by calling `render` only your `live` process, passing the `html` generated from a `live()` call, or the `html` generated from the `render_component` function.
 
+### Playwright options
+
+Pass these via `playwright_options` to `snap/2`.
+
+- `full_page` - when `true`, takes a screenshot of the full scrollable page instead of the visible viewport. Defaults to `false`.
+- `locator` - CSS selector or Playwright locator string to target a specific element for the screenshot.
+- `dark_mode` - enable dark mode rendering for the snapshot. Defaults to `false`.
+- `animations` - when set to `false`, stops CSS animations, CSS transitions, and Web Animations. Finite animations are fast-forwarded to completion, infinite animations are canceled to initial state. Defaults to `false`.
+- `mask` - array of CSS selectors to mask (hide) in the snapshot. Masked elements are overlaid with a colored box (default pink `#FF00FF`).
+- `mask_color` - color to use for masked regions, in CSS color format (for example `#FF00FF`). Defaults to pink.
+- `omit_background` - hides default white background and allows capturing screenshots with transparency. Not applicable to JPEG images. Defaults to `false`.
+- `clip` - clip a specific region of the page: `%{x: number, y: number, width: number, height: number}`.
+- `scale` - when set to `"css"`, screenshot has a single pixel per CSS pixel; `"device"` uses device pixels. Defaults to `"device"`.
+- `caret` - when set to `"hide"`, screenshot will hide text caret; `"initial"` leaves caret behavior unchanged. Defaults to `"hide"`.
+
 ### Rendering from `live()`
 
 ```elixir
