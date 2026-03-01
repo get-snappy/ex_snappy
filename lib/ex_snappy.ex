@@ -58,6 +58,8 @@ defmodule ExSnappy do
   `:dimensions`, which can be a list of maps with `:width` and `:height` keys.  
   Where dimensions aren't specified, the default will be 1920x1080
 
+  `:precision_threshold`, the match level below which the comparison will fail. Range: 0-100.
+
 
   ## Example
 
