@@ -70,6 +70,7 @@ defmodule ExSnappy do
       dark_mode: true,
       locator: ".my-element"
     },
+    precision_threshold: 92,
     dimensions: [
       %{width: 1280, height: 720},
       %{width: 1920, height: 1080}

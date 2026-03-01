@@ -140,6 +140,10 @@ Pass these via `playwright_options` to `snap/2`.
 - `scale` - when set to `"css"`, screenshot has a single pixel per CSS pixel; `"device"` uses device pixels. Defaults to `"device"`.
 - `caret` - when set to `"hide"`, screenshot will hide text caret; `"initial"` leaves caret behavior unchanged. Defaults to `"hide"`.
 
+### Other options
+
+- `precision_threshold` - match level below which the comparison will fail. Range: 0-100.
+
 ### Rendering from `live()`
 
 ```elixir
