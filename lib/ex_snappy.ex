@@ -29,7 +29,7 @@ defmodule ExSnappy do
   `:locator`, which can be a CSS selector which should target a *single* element.  This will limit 
   the screenshot size to the bounding box of the element.  This is useful for testing specific elements and components.
 
-  # Option
+  # Options
 
   `:dimensions`, which can be a list of maps with `:width` and `:height` keys.  
   Where dimensions aren't specified, the default will be 1920x1080
@@ -40,6 +40,7 @@ defmodule ExSnappy do
   ```elixir
   snap(html, name: "my_snapshot", 
     playwright_options: %{
+      full_page: false,
       dark_mode: true,
       locator: ".my-element"
     },
