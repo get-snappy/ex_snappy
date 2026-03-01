@@ -21,18 +21,44 @@ defmodule ExSnappy do
 
   # Playwright Options
 
-  `:full_page`, which defaults to `true`.
-  You can globally set whether to enable full page screenshots by setting the `:full_page` option in your config file to `false`.
+  These are passed via `:playwright_options`.
 
-  `:dark_mode`, which defaults to `false`.
+  `:full_page` - when `true`, takes a screenshot of the full scrollable page, instead of the
+  currently visible viewport. Defaults to `false`. You can globally set this in config using
+  `:full_page`.
 
-  `:locator`, which can be a CSS selector which should target a *single* element.  This will limit 
-  the screenshot size to the bounding box of the element.  This is useful for testing specific elements and components.
+  `:locator` - CSS selector or Playwright locator string to target a specific element for the
+  screenshot.
 
-  # Option
+  `:dark_mode` - enable dark mode rendering for the snapshot. Defaults to `false`.
+
+  `:animations` - when set to `false`, stops CSS animations, CSS transitions, and Web Animations.
+  Finite animations are fast-forwarded to completion (so they'll fire `transitionend`), and
+  infinite animations are canceled to initial state, then played over after the screenshot.
+  Defaults to `false`.
+
+  `:mask` - array of CSS selectors to mask (hide) in the snapshot. Masked elements are overlaid
+  with a colored box (default pink `#FF00FF`).
+
+  `:mask_color` - color to use for masked regions, in CSS color format. Defaults to pink.
+
+  `:omit_background` - hides default white background and allows capturing screenshots with
+  transparency. Not applicable to JPEG images. Defaults to `false`.
+
+  `:clip` - clip a specific region of the page: `%{x: number, y: number, width: number, height: number}`.
+
+  `:scale` - when set to `"css"`, screenshot has a single pixel per CSS pixel. When set to
+  `"device"`, screenshot has a single pixel per device pixel. Defaults to `"device"`.
+
+  `:caret` - when set to `"hide"`, screenshot will hide text caret. When set to `"initial"`,
+  text caret behavior will not be changed. Defaults to `"hide"`.
+
+  # Options
 
   `:dimensions`, which can be a list of maps with `:width` and `:height` keys.  
   Where dimensions aren't specified, the default will be 1920x1080
+
+  `:precision_threshold`, the match level below which the comparison will fail. Range: 0-100.
 
 
   ## Example
@@ -40,9 +66,11 @@ defmodule ExSnappy do
   ```elixir
   snap(html, name: "my_snapshot", 
     playwright_options: %{
+      full_page: false,
       dark_mode: true,
       locator: ".my-element"
     },
+    precision_threshold: 92,
     dimensions: [
       %{width: 1280, height: 720},
       %{width: 1920, height: 1080}
